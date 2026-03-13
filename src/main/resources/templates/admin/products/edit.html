@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/admin/layout::view(~{::title}, ~{::article})}"
+	th:with="active=${active}"
+>
+<head>
+<meta charset="UTF-8">
+<title>Quản lý sản phẩm</title>
+</head>
+<body>
+	<article>
+		<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+			<div>
+				<h3 class="fw-bold mb-3">Quản lý sản phẩm</h3>
+				<h6 class="op-7 mb-2"></h6>
+			</div>
+			<div class="ms-md-auto py-2 py-md-0">
+				<a
+					th:href="@{/admin/products}"
+					class="btn btn-primary btn-round"
+				>Back</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">Cập nhật sản phẩm</h4>
+					</div>
+					<div class="card-body">
+						<label
+							class="text-danger"
+							th:text="${message}"
+						></label>
+						<form
+							th:action="@{/admin/products/update}"
+							method="post"
+							th:object="${product}"
+							enctype="multipart/form-data"
+						>
+							<div class="form-group">
+								<label for="name">Name</label> <input
+									type="text"
+									class="form-control"
+									id="name"
+									th:field="*{name}"
+									required
+								/> <input
+									type="hidden"
+									class="form-control"
+									id="id"
+									th:field="*{id}"
+								/> <i
+									class="text-danger"
+									th:errors="*{name}"
+								></i>
+							</div>
+							<div class="form-group">
+								<label for="slug">Slug</label> <input
+									type="text"
+									class="form-control"
+									id="slug"
+									th:field="*{slug}"
+									required
+								/> <i
+									class="text-danger"
+									th:errors="*{slug}"
+								></i> <label
+									class="text-danger"
+									th:text="${slugError}"
+								></label>
+							</div>
+							<div class="form-group">
+								<label for="description">Description</label>
+								<textarea
+									class="form-control"
+									th:field="*{description}"
+									id="description"
+								></textarea>
+								<label
+									class="text-danger"
+									th:text="${description}"
+								></label>
+							</div>
+							<div class="form-group">
+								<label for="quantity">Quantity</label> <input
+									type="number"
+									class="form-control"
+									id="quantity"
+									th:field="*{quantity}"
+									required
+								/> <i
+									class="text-danger"
+									th:errors="*{quantity}"
+								></i>
+							</div>
+							<div class="form-group">
+								<label for="price">Price</label> <input
+									type="number"
+									class="form-control"
+									id="price"
+									th:field="*{price}"
+									required
+								/> <label
+									for="price"
+									id="lblPrice"
+								></label> <i
+									class="text-danger"
+									th:errors="*{price}"
+								></i>
+							</div>
+							<div class="form-group">
+								<label for="category">Category</label> <select
+									class="form-select"
+									th:field="*{category.id}"
+									id="category"
+								>
+									<option value="0">-- Choose category --</option>
+									<option
+										th:each="cate:${categories}"
+										th:value="${cate.id}"
+										th:text="${cate.name}"
+										th:selected="${cate.id}==*{category.id}"
+									></option>
+								</select> <i
+									class="text-danger"
+									th:text="${errorCategory}"
+								></i>
+							</div>
+							<div class="form-group">
+								<label for="image">Image</label> <input
+									type="file"
+									class="form-control-file"
+									id="image"
+									name="imageProduct"
+								/> <input
+									type="hidden"
+									class="form-control-file"
+									id="image"
+									th:field="*{image}"
+								/>
+							</div>
+							<div class="card-action">
+								<button class="btn btn-success">Save</button>
+								<a
+									th:href="@{/admin/products}"
+									class="btn btn-danger"
+								>Cancel</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				$('#name').on('change', function() {
+					var str = removeUTF8($('#name').val());
+					$('#slug').val(str);
+				})
+
+				$('#price').on('input', function() {
+					const formatted = formatNumber($(this).val());
+					$('#lblPrice').html(formatted);
+				})
+			</script>
+	</article>
+</body>
+</html>

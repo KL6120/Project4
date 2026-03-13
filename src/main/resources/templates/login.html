@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout::view(~{::title},~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+</head>
+<body>
+	<main>
+		<section class="bg0 p-t-104 p-b-116">
+			<div class="container">
+				<div class="flex-c-m">
+					<div
+						class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+						<form th:action="@{/login}" method="post">
+							<h4 class="mtext-105 cl2 txt-center p-b-30">Sign in</h4>
+
+							<div class="bor8 m-b-20 how-pos4-parent">
+								<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
+									type="email" name="email" placeholder="Email"> <img
+									class="how-pos4 pointer-none" src="images/icons/icon-email.png"
+									alt="ICON">
+							</div>
+							<div class="bor8 m-b-20 how-pos4-parent">
+								<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
+									type="password" name="password" placeholder="Password">
+								<img class="how-pos4 pointer-none"
+									src="images/icons/icon-email.png" alt="ICON">
+							</div>
+
+							<button
+								class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+								Log in</button>
+							<br>
+							<p class="mtext-105 cl2 txt-center p-b-30">
+								Don't have an account? <a th:href="@{'/register'}">Sign up</a>
+							</p>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+</body>
+</html>
