@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/admin/layout::view(~{::title}, ~{::article})}"
+	th:with="active=${active}"
+>
+<head>
+<meta charset="UTF-8">
+<title>Order Management</title>
+</head>
+<body>
+	<article>
+		<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+			<div>
+				<h3 class="fw-bold mb-3">Order Detail</h3>
+				<h6 class="op-7 mb-2"></h6>
+			</div>
+			<div class="ms-md-auto py-2 py-md-0">
+				<a
+					th:href="@{/admin/orders}"
+					class="btn btn-primary btn-round"
+				>Back</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">Order Detail</h4>
+					</div>
+					<div
+						class="card-body"
+						th:object="${order}"
+					>
+						<div>
+							<div class="form-group">
+								<label th:text="${'Order id: #'+ order.id}"></label>
+							</div>
+							<div class="form-group">
+								<label th:text="${'Order date: '+ #dates.format(order.createdAt, 'dd-MM-yyyy')}"></label>
+							</div>
+							<div class="form-group">
+								<label
+									th:text="${'Total: '+ #numbers.formatDecimal(order.total, 1, 'COMMA', 0, 'POINT') + 'đ'}"
+								></label>
+							</div>
+							<div class="form-group">
+								<label
+									th:text="${'Shipping fee: '+ #numbers.formatDecimal(order.feeShip, 1, 'COMMA', 0, 'POINT') + 'đ'}"
+								></label>
+							</div>
+							<div class="form-group">
+								<label
+									th:text="${'Discount: '+ #numbers.formatDecimal(order.discount, 1, 'COMMA', 0, 'POINT') + 'đ'}"
+								></label>
+							</div>
+							<div class="form-group">
+								<span th:if="${order.status == 1}"> Order status: <span class="text-danger">To
+										Confirm</span></span> <span th:if="${order.status == 2}"> Order status: <span class="text-danger">To
+										Pay</span>
+								</span> <span th:if="${order.status == 3}"> Order status: <span class="text-danger">To
+										Ship</span>
+								</span> <span th:if="${order.status == 4}"> Order status: <span class="text-danger">To
+										Receive</span>
+								</span> <span th:if="${order.status == 5}"> Order status: <span class="text-danger">Completed</span>
+								</span> <span th:if="${order.status == 6}"> Order status: <span class="text-danger">Cancelled</span>
+								</span>
+							</div>
+						</div>
+
+						<div class="table-responsive">
+							<table
+								id="basic-datatables"
+								class="display table table-striped table-hover"
+							>
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Product</th>
+										<th>Price</th>
+										<th>Quantity</th>
+										<th>Total</th>
+										<th width="15%">Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:each="orderDetail, st:${order.orderDetails}">
+										<tr th:object="${orderDetail}">
+											<td th:text="${st.count}"></td>
+											<td><img
+												th:src="@{|/images/${orderDetail.product.image}|}"
+												alt="IMG"
+												width="100"
+												height="100"
+											></td>
+											<td th:text="${orderDetail.product.name}"></td>
+											<td th:text="${#numbers.formatDecimal(orderDetail.price, 1, 'COMMA', 0, 'POINT') + 'đ'}"></td>
+											<td th:text="${orderDetail.quantity}"></td>
+											<td
+												th:text="${#numbers.formatDecimal(orderDetail.price * orderDetail.quantity, 1, 'COMMA', 0, 'POINT') + 'đ'}"
+											></td>
+
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+</body>
+</html>

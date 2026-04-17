@@ -8,10 +8,14 @@
 				<div class="right-top-bar flex-w h-full">
 					<a
 						th:if="${session.account != null}"
+						th:href="@{/orders}"
+						class="flex-c-m trans-04 p-lr-25"
+					>History Cart</a><a
+						th:if="${session.account != null}"
 						th:href="@{/edit-profile}"
 						class="flex-c-m trans-04 p-lr-25"
 						th:text="${session.account.fullname}"
-					></a> <a
+					></a><a
 						th:if="${session.account == null}"
 						th:href="@{/register}"
 						class="flex-c-m trans-04 p-lr-25"

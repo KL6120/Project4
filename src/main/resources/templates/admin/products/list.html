@@ -55,7 +55,7 @@
 											<td th:text="*{description}"></td>
 											<td th:text="*{quantity}"></td>
 											<td
-												th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 0, 'POINT')}"></td>
+												th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 0, 'POINT') + 'đ'}"></td>
 											<td th:text="*{category.name}"></td>
 											<td>
 												<div class="form-button-action">

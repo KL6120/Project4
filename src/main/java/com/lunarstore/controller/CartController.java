@@ -190,7 +190,7 @@ public class CartController {
 				orderDetailRepository.save(orderDetail);
 				cartDetailRepository.delete(cartDetail);
 			}
-			return "redirect:/orders/success/" + order.getId();
+			return "redirect:/orders/detail/" + order.getId();
 		} else {
 			order.setPaymentMethod(1);
 			order.setPaymentMethod(1);
@@ -220,7 +220,7 @@ public class CartController {
 		int paymentStatus = vnpayService.orderReturn(request);
 		String orderInfo = request.getParameter("vnp_OrderInfo");
 		if (paymentStatus == 1) {
-			return "redirect:/orders/success/" + orderInfo;
+			return "redirect:/orders/detail/" + orderInfo;
 		} else {
 			Order order = orderRepository.findById(Integer.parseInt(orderInfo)).orElse(null);
 			if (order != null) {

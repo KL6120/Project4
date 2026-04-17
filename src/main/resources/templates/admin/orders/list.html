@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/admin/layout::view(~{::title}, ~{::article})}"
+	th:with="active=${active}"
+>
+<head>
+<meta charset="UTF-8">
+<title>Orders</title>
+</head>
+<body>
+	<article>
+		<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+			<div>
+				<h3 class="fw-bold mb-3">Order Management</h3>
+				<h6 class="op-7 mb-2"></h6>
+			</div>
+			<div class="ms-md-auto py-2 py-md-0">
+				<a
+					th:href="@{/admin/orders/add}"
+					class="btn btn-primary btn-round"
+				>Add</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">Order List</h4>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table
+								id="basic-datatables"
+								class="display table table-striped table-hover"
+							>
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>Order date</th>
+										<th>Customer</th>
+										<th>Phone</th>
+										<th>Shipping fee</th>
+										<th>Discount</th>
+										<th>Total</th>
+										<th>Payment method</th>
+										<th>Status</th>
+										<th width="15%">Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:each="order:${orders}">
+										<tr th:object="${order}">
+											<td th:text="*{id}"></td>
+											<td th:text="${#dates.format(order.createdAt, 'dd/MM/yyyy')}"></td>
+											<td th:text="*{account.fullname}"></td>
+											<td th:text="*{account.phone}"></td>
+											<td th:text="${#numbers.formatDecimal(order.feeShip, 1, 'COMMA', 0, 'POINT') + 'đ'}"></td>
+											<td th:text="${#numbers.formatDecimal(order.discount, 1, 'COMMA', 0, 'POINT') + 'đ'}"></td>
+											<td th:text="${#numbers.formatDecimal(order.total, 1, 'COMMA', 0, 'POINT') + 'đ'}"></td>
+											<td th:text="${order.paymentMethod == 1? 'VNPay' : 'COD'}"></td>
+											<th th:switch="*{status}"><span th:case="1">To Confirm</span><span th:case="2">To
+													Pay</span> <span th:case="3">To Ship</span> <span th:case="4">To Receive</span> <span
+												th:case="5"
+											>Completed</span> <span th:case="6">Cancelled</span></th>
+											<td>
+												<div class="form-button-action">
+													<a
+														th:href="@{|/admin/orders/detail/*{id}|}"
+														data-bs-toggle="tooltip"
+														title="Detail"
+														class="btn btn-link btn-info btn-lg"
+														data-original-title="Active"
+													><i class="fa fa-info-circle"></i> </a> <a
+														th:if="*{status} == 1"
+														th:href="@{|/admin/orders/updateStatus/*{id}/2|}"
+														data-bs-toggle="tooltip"
+														title="Confirm"
+														class="btn btn-link btn-success btn-lg"
+														data-original-title="Confirm"
+													><i class="fa fa-square"></i></a> <a
+														th:if="*{status} == 2"
+														th:href="@{|/admin/orders/updateStatus/*{id}/3|}"
+														data-bs-toggle="tooltip"
+														title="To Ship"
+														class="btn btn-link btn-success btn-lg"
+														data-original-title="To Ship"
+													>To Ship</a> <a
+														th:if="*{status} == 3"
+														th:href="@{|/admin/orders/updateStatus/*{id}/4|}"
+														data-bs-toggle="tooltip"
+														title="To Receive"
+														class="btn btn-link btn-success btn-lg"
+														data-original-title="To Receive"
+													>To Receive</a> <a
+														th:if="*{status} == 1"
+														th:href="@{|/admin/orders/updateStatus/*{id}/6|}"
+														data-bs-toggle="tooltip"
+														title="Cancelled"
+														class="btn btn-link btn-danger btn-lg"
+														data-original-title="Cancelled"
+													><i class="fa fa-trash"></i></a>
+												</div>
+											</td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+	<input
+		type="hidden"
+		th:value="${message}"
+		id="message"
+	/>
+	<script type="text/javascript">
+		let message = document.getElementById('message').value;
+		if (message) {
+			swal("Notification", message, "success");
+		}
+	</script>
+</body>
+</html>

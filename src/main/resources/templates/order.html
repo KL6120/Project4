@@ -25,8 +25,94 @@
 
 
 		<!-- Shoping Cart -->
-		
-	
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-xl-12 m-lr-auto m-b-50">
+					<h4 class="mtext-109 cl2 p-b-30 text-center">History cart</h4>
+					<div class="wrap-table-shopping-cart">
+						<table class="table-shopping-cart">
+							<tr class="table_head">
+								<th
+									class="text-center"
+									width="5%"
+								>#</th>
+								<th class="text-center">Purchase date</th>
+								<th class="text-center">Shipping fee</th>
+								<th class="text-center">Discount</th>
+								<th class="text-center">Price</th>
+								<th class="text-center">Total</th>
+								<th class="text-center">Status</th>
+								<th class="text-center">Action</th>
+							</tr>
+
+							<th:block th:each="order, st : ${orders}">
+								<tr class="table_row cart-item">
+									<td
+										class="text-center"
+										th:text="${st.count}"
+									></td>
+									<td
+										class="text-center"
+										th:text="${#dates.format(order.createdAt, 'dd-MM-yyyy')}"
+									></td>
+									<td
+										class="text-center"
+										th:text="${#numbers.formatDecimal(order.feeShip, 1, 'POINT', 0, 'COMMA') + 'đ'}"
+									></td>
+									<td
+										class="text-center"
+										th:text="${#numbers.formatDecimal(order.discount, 1, 'POINT', 0, 'COMMA') + 'đ'}"
+									></td>
+									<td
+										class="text-center"
+										th:text="${#numbers.formatDecimal(order.total, 1, 'POINT', 0, 'COMMA') + 'đ'}"
+									></td>
+									<td
+										class="
+											text-center
+											line-total"
+										th:text="${#numbers.formatDecimal(order.total + order.feeShip - order.discount, 1, 'POINT', 0, 'COMMA') + 'đ'}"
+									></td>
+									<td class="text-center"><span
+										class="stext-110 cl2"
+										th:if="${order.status == 1}"
+									><span class="text-danger">To Confirm</span></span> <span
+										class="stext-110 cl2"
+										th:if="${order.status == 2}"
+									><span class="text-danger">To Pay</span></span> <span
+										class="stext-110 cl2"
+										th:if="${order.status == 3}"
+									><span class="text-danger">To Ship</span></span> <span
+										class="stext-110 cl2"
+										th:if="${order.status == 4}"
+									><span class="text-danger">To Receive</span></span> <span
+										class="stext-110 cl2"
+										th:if="${order.status == 5}"
+									><span class="text-success">Completed</span></span> <span
+										class="stext-110 cl2"
+										th:if="${order.status == 6}"
+									><span class="text-danger">Cancelled</span></span></td>
+
+									<td class="text-center"><a
+										class="btn btn-danger"
+										th:if="${order.status < 2}"
+										th:href="@{|/orders/cancel/${order.id}|}"
+									>Cancel Order</a> <a
+										class="btn btn-success"
+										th:if="${order.status == 4}"
+										th:href="@{|/orders/receive/${order.id}|}"
+									>Order Received</a> <a
+										class="btn btn-infor"
+										th:href="@{|/orders/detail/${order.id}|}"
+									>Detail</a></td>
+								</tr>
+							</th:block>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</main>
 </body>
 </html>

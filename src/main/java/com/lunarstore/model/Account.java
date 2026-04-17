@@ -20,9 +20,11 @@ public class Account {
 	String password;
 	@Column(columnDefinition = "nvarchar(50)")
 	String fullname;
+	@Column(columnDefinition = "nvarchar(10)")
+	String phone;
 	Boolean gender;
 	Boolean admin;
-	
+
 	public Account(Integer id, String email, String password, String fullname, Boolean gender, Boolean admin,
 			List<Address> addresses, List<Order> orders, List<Favourite> favourites, List<CartDetail> cartDetails) {
 		this.id = id;
@@ -36,10 +38,11 @@ public class Account {
 		this.favourites = favourites;
 		this.cartDetails = cartDetails;
 	}
+
 	public Account() {
-	
+
 	}
-	
+
 	@OneToMany(mappedBy = "account")
 	List<Address> addresses;
 	@OneToMany(mappedBy = "account")
@@ -52,62 +55,89 @@ public class Account {
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getFullname() {
 		return fullname;
 	}
+
 	public void setFullname(String fullname) {
 		this.fullname = fullname;
 	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public Boolean getGender() {
 		return gender;
 	}
+
 	public void setGender(Boolean gender) {
 		this.gender = gender;
 	}
+
 	public Boolean getAdmin() {
 		return admin;
 	}
+
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
 	}
+
 	public List<Address> getAddresses() {
 		return addresses;
 	}
+
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
 	}
+
 	public List<Order> getOrders() {
 		return orders;
 	}
+
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
+
 	public List<Favourite> getFavourites() {
 		return favourites;
 	}
+
 	public void setFavourites(List<Favourite> favourites) {
 		this.favourites = favourites;
 	}
+
 	public List<CartDetail> getCartDetails() {
 		return cartDetails;
 	}
+
 	public void setCartDetails(List<CartDetail> cartDetails) {
 		this.cartDetails = cartDetails;
 	}
-	
+
 }
