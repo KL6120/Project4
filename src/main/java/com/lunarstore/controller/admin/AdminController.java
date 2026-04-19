@@ -18,15 +18,10 @@ public class AdminController {
 	public String home(Model model, HttpSession session) {
 		Account account = (Account) session.getAttribute("account");
 		if(account.getAdmin() == null && account.getAdmin() != true) {
-			return "admin/requiredAdmin";
+			return "admin/login";
 		}
 		model.addAttribute("active", "index");
 		return "admin/index";
-	}
-	
-	@GetMapping("/requiredAdmin")
-	public String requiredAdmin() {
-		return "admin/requiredAdmin";
 	}
 	
 	@PostMapping("/admin/login")

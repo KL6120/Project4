@@ -10,9 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -33,7 +31,7 @@ public class OrderController {
 	@Autowired
 	HttpSession session;
 
-	@GetMapping("/orders")
+	@RequestMapping("/orders")
 	public String orders(Model model, @RequestParam("page") Optional<Integer> page) {
 		Account account = (Account) session.getAttribute("account");
 		if (account == null) {
@@ -49,7 +47,7 @@ public class OrderController {
 		return "order";
 	}
 
-	@GetMapping("/orders/detail/{id}")
+	@RequestMapping("/orders/detail/{id}")
 	public String orderSuccess(Model model, @PathVariable("id") Integer id) {
 		Account account = (Account) session.getAttribute("account");
 		if (account == null) {
@@ -63,7 +61,7 @@ public class OrderController {
 		return "order-detail";
 	}
 
-	@PostMapping("/orders/cancel/{id}")
+	@RequestMapping("/orders/cancel/{id}")
 	public String orderCancel(Model model, @PathVariable("id") Integer id) {
 		Account account = (Account) session.getAttribute("account");
 		if (account == null) {
@@ -78,7 +76,7 @@ public class OrderController {
 		return "redirect:/orders";
 	}
 
-	@PostMapping("/orders/receive/{id}")
+	@RequestMapping("/orders/receive/{id}")
 	public String orderUpdate(Model model, @PathVariable("id") Integer id) {
 		Account account = (Account) session.getAttribute("account");
 		if (account == null) {

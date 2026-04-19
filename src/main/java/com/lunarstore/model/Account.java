@@ -1,6 +1,7 @@
 package com.lunarstore.model;
 
 import java.time.LocalDate;
+
 import java.util.ArrayList;
 
 import java.util.List;
@@ -103,6 +104,14 @@ public class Account {
 		this.avatar = avatar;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public Boolean getGender() {
 		return gender;
 	}
@@ -117,14 +126,6 @@ public class Account {
 
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
 	}
 
 	public LocalDate getDateofbirth() {
