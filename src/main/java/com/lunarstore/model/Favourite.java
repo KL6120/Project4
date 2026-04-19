@@ -13,13 +13,15 @@ import jakarta.persistence.Table;
 public class Favourite {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
-	
-	@ManyToOne @JoinColumn(name = "account_id")
-	Account account;
-	@ManyToOne @JoinColumn(name = "product_id")
-	Product product;
-	
+	private Integer id;
+
+	@ManyToOne
+	@JoinColumn(name = "account_id")
+	private Account account;
+	@ManyToOne
+	@JoinColumn(name = "product_id")
+	private Product product;
+
 	public Favourite() {
 
 	}
@@ -53,5 +55,5 @@ public class Favourite {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
+
 }

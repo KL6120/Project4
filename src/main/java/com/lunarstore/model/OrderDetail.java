@@ -13,15 +13,17 @@ import jakarta.persistence.Table;
 public class OrderDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
-	int quantity;
-	int price;
-	
-	@ManyToOne @JoinColumn(name = "order_id")
-	Order order;
-	@ManyToOne @JoinColumn(name = "product_id")
-	Product product;
-	
+	private Integer id;
+	private int quantity;
+	private int price;
+
+	@ManyToOne
+	@JoinColumn(name = "order_id")
+	private Order order;
+	@ManyToOne
+	@JoinColumn(name = "product_id")
+	private Product product;
+
 	public OrderDetail() {
 
 	}
@@ -73,5 +75,5 @@ public class OrderDetail {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
+
 }

@@ -1,7 +1,9 @@
 package com.lunarstore.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,32 +22,34 @@ import jakarta.validation.constraints.Positive;
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
+	private Integer id;
 	@Column(columnDefinition = "nvarchar(50)")
 	@NotBlank(message = "Chưa nhập tên sản phẩm")
-	String name;
-	String slug;
+	private String name;
+	private String slug;
 	@Column(columnDefinition = "nvarchar(max)")
-	String description;
+	private String description;
 	@Column(columnDefinition = "nvarchar(255)")
-	String image;
+	private String image;
 	@NotNull(message = "Chưa nhập giá trị sản phẩm")
 	@Positive(message = "Số tiền phải lớn hơn 0")
 	@Column(nullable = false)
-	Integer price;
+	private Integer price;
 	@NotNull(message = "Chưa nhập số lượng sản phẩm")
 	@Positive(message = "Số lượng phải lớn hơn 0")
 	@Column(nullable = false)
-	Integer quantity;
-	Boolean active;
+	private Integer quantity;
+	private Boolean active;
 
 	@ManyToOne
 	@JoinColumn(name = "category_id")
-	Category category;
+	private Category category;
 	@OneToMany(mappedBy = "product")
-	List<Favourite> favourites;
+	private List<Favourite> favourites;
 	@OneToMany(mappedBy = "product")
-	List<CartDetail> cartDetails;
+	private List<CartDetail> cartDetails;
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Review> reviews = new ArrayList<>();
 
 	public Product() {
 

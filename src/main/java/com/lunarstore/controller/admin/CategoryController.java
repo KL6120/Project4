@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,7 @@ public class CategoryController {
 	@Autowired
 	ProductRepository productRepository;
 
-	@RequestMapping("admin/categories")
+	@GetMapping("admin/categories")
 	public String index(Model model) {
 		List<Category> categories = categoryRepository.findByActive(true, Sort.by(Direction.DESC, "id"));
 		model.addAttribute("active", "category");
@@ -36,7 +37,7 @@ public class CategoryController {
 	}
 
 	// Gọi form thêm mới
-	@RequestMapping("admin/categories/add")
+	@GetMapping("admin/categories/add")
 	public String add(Model model) {
 		model.addAttribute("active", "category");
 		model.addAttribute("category", new Category());
@@ -66,7 +67,7 @@ public class CategoryController {
 	}
 
 	// Gọi form cập nhật
-	@RequestMapping("admin/categories/edit/{id}")
+	@GetMapping("admin/categories/edit/{id}")
 	public String edit(Model model, @PathVariable("id") Integer id) {
 		Category category = categoryRepository.findById(id).orElse(null);
 		if (category == null) {
@@ -100,7 +101,7 @@ public class CategoryController {
 	}
 
 	// Delete
-	@RequestMapping("admin/categories/delete/{id}")
+	@GetMapping("admin/categories/delete/{id}")
 	public String delete(Model model, @PathVariable("id") Integer id) {
 		Category category = categoryRepository.findById(id).orElse(null);
 		if (category == null) {

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout::view(~{::title},~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Account</title>
+</head>
+<body>
+	<main>
+		<!-- My profile -->
+		<section class="bg0 p-t-23 p-b-140">
+			<div class="container">
+				<div class="p-b-10">
+					<h3 class="ltext-103 cl5">My profile</h3>
+				</div>
+				<div class="profile" th:each="accounts : ${account}">
+					<a th:href="@{'/editProfile/' + ${accounts.id}}">Edit my profile</a>
+					<div class="avatar">
+						<img src="@{|/images/${accounts.avatar}/|}" alt="" width="150"/> 
+					</div>
+					<div class="informations">
+						<p>
+							<strong>Full name:</strong> <span th:text="${accounts.fullname}"></span>
+						</p>
+						<p>
+							<strong>Email:</strong> <span th:text="${accounts.email}"></span>
+						</p>
+						<p>
+							<strong>Phone:</strong> <span th:text="${accounts.phone}"></span>
+						</p>
+						<p>
+							<strong>Gender:</strong> <span th:text="${accounts.gender ? 'Male' : 'Female'}"></span>
+						</p>
+						<p>
+							<strong>Date of birth:</strong> <span th:text="${accounts.dateofbirth}"></span>
+						</p>
+					</div>
+				</div>
+				</th:block>
+			</div>
+
+			<!-- Load more -->
+			<div class="flex-c-m flex-w w-full p-t-45">
+				<a th:if="${totalPages != null && page < totalPages}"
+					th:href="@{|?page=${page}|}"
+					class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+					Load More </a>
+			</div>
+		</section>
+	</main>
+</body>
+</html>

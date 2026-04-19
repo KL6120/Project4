@@ -16,17 +16,17 @@ import jakarta.validation.constraints.NotBlank;
 public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
+	private Integer id;
 	@Column(columnDefinition = "nvarchar(50)")
 	@NotBlank(message = "Chưa nhập tên loại")
-	String name;
+	private String name;
 	@NotBlank(message = "Chưa nhập slug")
-	String slug;
-	Integer parentId;
-	Boolean active;
-	
+	private String slug;
+	private Integer parentId;
+	private Boolean active;
+
 	@OneToMany(mappedBy = "category")
-	List<Product> products;
+	private List<Product> products;
 
 	public Category() {
 	}
@@ -87,7 +87,5 @@ public class Category {
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
-	
-	
-}
 
+}

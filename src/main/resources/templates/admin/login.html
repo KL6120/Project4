@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Admin Login</title>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial, sans-serif;
+}
+
+body {
+	height: 100vh;
+	background: linear-gradient(135deg, #4facfe, #00f2fe);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.login-container {
+	background: #fff;
+	padding: 40px;
+	border-radius: 12px;
+	width: 350px;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.login-container h2 {
+	text-align: center;
+	margin-bottom: 25px;
+	color: #333;
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+.form-group label {
+	font-size: 14px;
+	color: #555;
+}
+
+.form-group input {
+	width: 100%;
+	padding: 10px;
+	margin-top: 6px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	transition: 0.3s;
+}
+
+.form-group input:focus {
+	border-color: #4facfe;
+	outline: none;
+}
+
+.forgot-password {
+	text-align: right;
+	margin-bottom: 15px;
+}
+
+.forgot-password a {
+	font-size: 13px;
+	color: #4facfe;
+	text-decoration: none;
+}
+
+.forgot-password a:hover {
+	text-decoration: underline;
+}
+
+.login-btn {
+	width: 100%;
+	padding: 12px;
+	background: #4facfe;
+	border: none;
+	color: white;
+	font-size: 16px;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.login-btn:hover {
+	background: #007bff;
+}
+
+.footer-text {
+	text-align: center;
+	margin-top: 15px;
+	font-size: 13px;
+	color: #777;
+}
+</style>
+</head>
+<body>
+
+	<div class="login-container">
+		<h2>Admin Login</h2>
+		<form action="/admin/login" method="post">
+
+			<div class="form-group">
+				<label>Email</label> <input type="text" name="email"
+					placeholder="Enter your email..." required>
+			</div>
+
+			<div class="form-group">
+				<label>Password</label> <input type="password" name="password"
+					placeholder="Enter your password..." required>
+			</div>
+
+			<!-- Forgot Password -->
+			<div class="forgot-password">
+				<a href="/forgot-password">Forgot your password?</a>
+			</div>
+
+			<button type="submit" class="login-btn">Login</button>
+		</form>
+
+		<div class="footer-text">For administrators only.</div>
+	</div>
+
+</body>
+</html>

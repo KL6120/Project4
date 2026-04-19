@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,7 +27,7 @@ public class HomeController {
 	@Autowired
 	ProductRepository productRepository;
 	
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String home(Model model, @RequestParam("page") Optional<Integer> page) {
 		List<Category> categories = categoryRepository.findByActive(true, Sort.by(Direction.ASC, "id"));
 		Pageable pageable = PageRequest.of(page.orElse(0), 8, Sort.by(Direction.DESC, "id"));
@@ -41,7 +42,7 @@ public class HomeController {
 	}
 	
 	//Search
-	@RequestMapping("/search")
+	@GetMapping("/search")
 	public String search(Model model, @RequestParam("keyword") String keyword, @RequestParam("page") Optional<Integer> page) {
 		List<Category> categories = categoryRepository.findByActive(true, Sort.by(Direction.ASC, "id"));
 		Pageable pageable = PageRequest.of(page.orElse(0), 8, Sort.by(Direction.DESC, "id"));

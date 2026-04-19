@@ -1,6 +1,7 @@
 package com.lunarstore.controller.admin;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,10 +13,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,7 +37,7 @@ public class ProductController {
 	@Autowired
 	ServletContext servletContext;
 
-	@RequestMapping("admin/products")
+	@GetMapping("admin/products")
 	public String index(Model model) {
 		List<Product> products = productRepository.findByActive(true);
 		model.addAttribute("products", products);
@@ -46,7 +47,7 @@ public class ProductController {
 	}
 
 	// Gọi form thêm mới
-	@RequestMapping("admin/products/add")
+	@GetMapping("admin/products/add")
 	public String add(Model model) {
 		model.addAttribute("active", "product");
 		model.addAttribute("product", new Product());
@@ -87,10 +88,10 @@ public class ProductController {
 		model.addAttribute("categories", categories);
 		return "admin/products/add";
 	}
-	
-	//Gọi form cập nhật
-	@RequestMapping("admin/products/edit/{id}")
-	public String edit(Model model, @PathVariable("id") Integer id) {
+
+	// Gọi form cập nhật
+	@GetMapping("admin/products/edit/{id}")
+	public String edit(Model model, @PathVariable Integer id) {
 		model.addAttribute("active", "product");
 		Product product = productRepository.findById(id).orElse(null);
 		model.addAttribute("product", product);
@@ -98,8 +99,8 @@ public class ProductController {
 		model.addAttribute("categories", categories);
 		return "admin/products/edit";
 	}
-	
-	//Update dữ liệu
+
+	// Update dữ liệu
 	@PostMapping("admin/products/update")
 	public String update(Model model, @Valid @ModelAttribute Product product, Errors errors,
 			@RequestParam("imageProduct") MultipartFile image) {
@@ -131,15 +132,15 @@ public class ProductController {
 		model.addAttribute("categories", categories);
 		return "admin/products/add";
 	}
-	
-	//Delete
-		@RequestMapping("admin/products/delete/{id}")
-		public String delete(Model model, @PathVariable("id") Integer id) {
-			model.addAttribute("active", "product");
-			Product product = productRepository.findById(id).orElse(null);
-			product.setActive(false);
-			productRepository.save(product);
-			return "redirect:/admin/products";
-		}
-		
+
+	// Delete
+	@GetMapping("admin/products/delete/{id}")
+	public String delete(Model model, @PathVariable Integer id) {
+		model.addAttribute("active", "product");
+		Product product = productRepository.findById(id).orElse(null);
+		product.setActive(false);
+		productRepository.save(product);
+		return "redirect:/admin/products";
+	}
+
 }

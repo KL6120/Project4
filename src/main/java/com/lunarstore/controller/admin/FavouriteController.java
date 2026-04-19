@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +37,7 @@ public class FavouriteController {
 	@Autowired
 	HttpSession session;
 
-	@RequestMapping("/favourite")
+	@GetMapping("/favourite")
 	public String index(Model model, @RequestParam("page") Optional<Integer> page) {
 		List<Category> categories = categoryRepository.findByActive(true, Sort.by(Direction.ASC, "id"));
 		Account account = (Account) session.getAttribute("account");
@@ -50,7 +51,7 @@ public class FavouriteController {
 		return "favourite";
 	}
 
-	@RequestMapping("/favourite/add/{slug}")
+	@GetMapping("/favourite/add/{slug}")
 	public String add(Model model, @PathVariable("slug") String slug) {
 		Account account = (Account) session.getAttribute("account");
 		Product product = productRepository.findByActiveAndSlug(true, slug);

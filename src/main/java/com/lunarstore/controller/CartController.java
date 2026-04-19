@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -33,6 +34,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
+@RequestMapping
 public class CartController {
 	@Autowired
 	CartDetailRepository cartDetailRepository;
@@ -53,7 +55,7 @@ public class CartController {
 	@Autowired
 	HttpServletRequest request;
 
-	@RequestMapping("/carts/add")
+	@GetMapping("/carts/add")
 	public String add(RedirectAttributes redirectAttributes, @RequestParam("quantity") Integer quantity,
 			@RequestParam("productSlug") String productSlug) {
 		Account account = (Account) session.getAttribute("account");
@@ -82,7 +84,7 @@ public class CartController {
 		return "redirect:/carts";
 	}
 
-	@RequestMapping("/carts")
+	@GetMapping("/carts")
 	public String carts(Model model) {
 		Account account = (Account) session.getAttribute("account");
 		if (account == null) {
@@ -106,7 +108,7 @@ public class CartController {
 		return "cart";
 	}
 
-	@RequestMapping("/carts/remove/{id}")
+	@GetMapping("/carts/remove/{id}")
 	public String remove(Model model, @PathVariable("id") Integer id) {
 		Account account = (Account) session.getAttribute("account");
 		if (account == null) {
@@ -121,7 +123,7 @@ public class CartController {
 		return "redirect:/carts";
 	}
 
-	@RequestMapping("/carts/update")
+	@GetMapping("/carts/update")
 	public String update(RedirectAttributes redirectAttributes, @RequestParam("id") Integer id,
 			@RequestParam("quantity") Integer quantity) {
 		Account account = (Account) session.getAttribute("account");
@@ -145,7 +147,7 @@ public class CartController {
 		return "redirect:/carts";
 	}
 
-	@RequestMapping("/carts/checkout")
+	@PostMapping("/carts/checkout")
 	public String checkout(@RequestParam("ids") String[] ids, @RequestParam("provinceSelect") int provinceSelect,
 			@RequestParam("districtSelect") int districtSelect, @RequestParam("wardSelect") String wardSelect,
 			@RequestParam("fullAddress") String fullAddress, @RequestParam("voucher") Integer voucherId,
@@ -190,7 +192,7 @@ public class CartController {
 				orderDetailRepository.save(orderDetail);
 				cartDetailRepository.delete(cartDetail);
 			}
-			return "redirect:/orders/success/" + order.getId();
+			return "redirect:/orders/detail/" + order.getId();
 		} else {
 			order.setPaymentMethod(1);
 			order.setPaymentMethod(1);
@@ -220,7 +222,7 @@ public class CartController {
 		int paymentStatus = vnpayService.orderReturn(request);
 		String orderInfo = request.getParameter("vnp_OrderInfo");
 		if (paymentStatus == 1) {
-			return "redirect:/orders/success/" + orderInfo;
+			return "redirect:/orders/detail/" + orderInfo;
 		} else {
 			Order order = orderRepository.findById(Integer.parseInt(orderInfo)).orElse(null);
 			if (order != null) {

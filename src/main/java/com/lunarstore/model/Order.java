@@ -20,26 +20,26 @@ import jakarta.persistence.TemporalType;
 public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
+	private Integer id;
 	@Temporal(TemporalType.TIMESTAMP)
-	Date createdAt;
-	int total;
-	int feeShip;
-	int discount;
-	int paymentMethod;
-	int paymentStatus;
-	int status;
+	private Date createdAt;
+	private int total;
+	private int feeShip;
+	private int discount;
+	private int paymentMethod;
+	private int paymentStatus;
+	private int status;
 	@Column(columnDefinition = "nvarchar(500)")
-	String shipAddress;
+	private String shipAddress;
 
 	@ManyToOne
 	@JoinColumn(name = "account_id")
-	Account account;
+	private Account account;
 	@ManyToOne
 	@JoinColumn(name = "voucher_id")
-	Voucher voucher;
+	private Voucher voucher;
 	@OneToMany(mappedBy = "order")
-	List<OrderDetail> orderDetails;
+	private List<OrderDetail> orderDetails;
 
 	public Order() {
 
@@ -157,5 +157,4 @@ public class Order {
 		this.orderDetails = orderDetails;
 	}
 
-	
 }

@@ -23,8 +23,8 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers("/css/**", "/js/**", "/fonts/**", "/images/**", "/vendor/**", "/admin/**")
-						.permitAll().requestMatchers("/", "/register", "/search", "shopping/**").permitAll()
+						.requestMatchers("/css/**", "/js/**", "/fonts/**", "/images/**", "/vendor/**")
+						.permitAll().requestMatchers("/", "/register", "/search", "shopping/**").permitAll()						
 						.requestMatchers("/admin/**").hasRole("ADMIN")
 						.requestMatchers("/favourite/**", "/carts/**", "/vnpay-payment/**", "/orders/**").hasAnyRole("USER", "ADMIN")
 						.anyRequest().authenticated())
@@ -34,8 +34,8 @@ public class SecurityConfig {
 				.build();
 	}
 
-	@Bean
-	public RestTemplate restTemplate() {
+    @Bean
+    RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
 }

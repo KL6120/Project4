@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,7 @@ public class VoucherController {
 	@Autowired
 	VoucherRepository voucherRepository;
 
-	@RequestMapping("/admin/vouchers")
+	@GetMapping("/admin/vouchers")
 	public String index(Model model) {
 
 		List<Voucher> vouchers = voucherRepository.findAll(Sort.by(Direction.DESC, "id"));
@@ -34,7 +35,7 @@ public class VoucherController {
 	}
 
 	// Gọi form thêm mới
-	@RequestMapping("/admin/vouchers/add")
+	@GetMapping("/admin/vouchers/add")
 	public String add(Model model) {
 		model.addAttribute("voucher", new Voucher());
 		model.addAttribute("active", "vouchers");
@@ -66,7 +67,7 @@ public class VoucherController {
 	}
 
 	// Gọi form edit
-	@RequestMapping("/admin/vouchers/edit/{id}")
+	@GetMapping("/admin/vouchers/edit/{id}")
 	public String edit(Model model, @PathVariable("id") Integer id) {
 		Voucher voucher = voucherRepository.findById(id).orElse(null);
 		model.addAttribute("voucher", voucher);
@@ -98,7 +99,7 @@ public class VoucherController {
 	}
 
 	// Gọi form active or deactive
-	@RequestMapping("/admin/vouchers/active/{id}")
+	@GetMapping("/admin/vouchers/active/{id}")
 	public String active(Model model, @PathVariable("id") Integer id) {
 		Voucher voucher = voucherRepository.findById(id).orElse(null);
 		voucher.setActived(!voucher.getActived());
@@ -108,7 +109,7 @@ public class VoucherController {
 	}
 
 	// Gọi form delete
-	@RequestMapping("/admin/vouchers/delete/{id}")
+	@GetMapping("/admin/vouchers/delete/{id}")
 	public String delete(Model model, @PathVariable("id") Integer id) {
 		Voucher voucher = voucherRepository.findById(id).orElse(null);
 		if (!voucher.getOrders().isEmpty()) {

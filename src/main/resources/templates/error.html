@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout::view(~{::title},~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Homepage</title>
+</head>
+<body>
+	<main>
+		<section th:replace="~{/slider}"></section>
+		<section class="bg0 p-t-23 p-b-140">
+			<h1>Something went wrong!</h1>
+			<h2>Our Engineers are on it</h2>
+			<a href="/">Go Home</a>
+		</section>
+	</main>
+</body>
+</html>

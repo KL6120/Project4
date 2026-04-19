@@ -14,20 +14,21 @@ import jakarta.persistence.Table;
 public class Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
-	int provideId;
-	int districtId;
-	int wardCode;
+	private Integer id;
+	private int provideId;
+	private int districtId;
+	private int wardCode;
 	@Column(columnDefinition = "nvarchar(250)")
-	String address;
+	private String address;
 	@Column(columnDefinition = "nvarchar(500)")
-	String fullAddress;
-	Boolean isDefault;
-	Boolean actived;
-	
-	@ManyToOne @JoinColumn(name = "account_id")
-	Account account;
-	
+	private String fullAddress;
+	private Boolean isDefault;
+	private Boolean actived;
+
+	@ManyToOne
+	@JoinColumn(name = "account_id")
+	private Account account;
+
 	public Address() {
 	}
 
@@ -115,6 +116,5 @@ public class Address {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
-
 
 }

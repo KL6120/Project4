@@ -23,32 +23,32 @@ import jakarta.validation.constraints.Positive;
 public class Voucher {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
-	@NotBlank(message="Chưa nhập mã giảm giá")
-	String code;
+	private Integer id;
+	@NotBlank(message = "Chưa nhập mã giảm giá")
+	private String code;
 	@NotNull(message = "Chưa nhập % giảm giá")
 	@Range(min = 1, max = 50, message = "Giá trị giảm giá chỉ được từ 1 - 50%")
-	Integer discountPercent;
+	private Integer discountPercent;
 	@NotNull(message = "Chưa nhập số lượng giảm giá")
 	@Positive(message = "Số lượng phải > 0")
-	Integer quantity;
-	
+	private Integer quantity;
+
 	@Temporal(TemporalType.DATE)
-	Date createdAt;
+	private Date createdAt;
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "Chưa nhập ngày bắt đầu")
-	Date startedAt;
+	private Date startedAt;
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "Chưa nhập ngày kết thúc")
-	Date endAt;
-	Boolean actived;
+	private Date endAt;
+	private Boolean actived;
 	@OneToMany(mappedBy = "voucher")
-	List<Order> orders;
-	
+	private List<Order> orders;
+
 	public Voucher() {
-		
+
 	}
 
 	public Voucher(Integer id, String code, Integer discountPercent, Integer quantity, Date createdAt, Date startedAt,
@@ -135,5 +135,5 @@ public class Voucher {
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
-	
+
 }

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/admin/layout::view(~{::title},~{::article})}"
+	th:with="active=${active}">
+<head>
+<meta charset="UTF-8">
+<title>Admintration</title>
+</head>
+<body>
+	<h1>Admin privileges are required to log in.</h1>
+	<a th:href="${/admin/login}">Login admin</a>
+</body>
+</html>

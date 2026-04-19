@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout::view(~{::title},~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Account</title>
+</head>
+<body>
+	<main>
+		<!-- My profile -->
+		<section class="bg0 p-t-23 p-b-140">
+			<div class="container">
+				<div class="p-b-10">
+					<h3 class="ltext-103 cl5">Edit profile</h3>
+				</div>
+				<div class="profile">
+					<form th:action="@{/editProfile/update}" method="post"
+						enctype="multipart/form-data" th:object="${account}">
+
+						<input type="hidden" th:field="*{id}" />
+
+						<div class="avatar">
+
+							<img th:src="@{|/images/${account.avatar}|}" width="150" /> <label>Image</label>
+
+							<input type="file" name="imageAccount" class="form-control-file" />
+
+						</div>
+
+						<div class="content">
+
+							<div class="form-group">
+
+								<label>Your fullname</label> <input type="text"
+									th:field="*{fullname}" class="form-control" />
+
+							</div>
+
+							<div class="form-group">
+
+								<label>Email</label> <input type="text" th:field="*{email}"
+									class="form-control" />
+
+							</div>
+
+							<div class="form-group">
+
+								<label>Phone</label> <input type="text" th:field="*{phone}"
+									class="form-control" />
+
+							</div>
+
+							<div class="form-group">
+
+								<label>Gender</label> Male <input type="radio"
+									th:field="*{gender}" value="true"> Female <input
+									type="radio" th:field="*{gender}" value="false">
+
+							</div>
+
+							<div class="form-group">
+
+								<label>Date of birth</label> <input type="date" th:field="*{dateofbirth}"
+									class="form-control" />
+
+							</div>
+
+							<button class="btn btn-primary">Update profile</button>
+
+						</div>
+
+					</form>
+				</div>
+				</th:block>
+			</div>
+
+			<!-- Load more -->
+			<div class="flex-c-m flex-w w-full p-t-45">
+				<a th:if="${totalPages != null && page < totalPages}"
+					th:href="@{|?page=${page}|}"
+					class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+					Load More </a>
+			</div>
+		</section>
+	</main>
+</body>
+</html>

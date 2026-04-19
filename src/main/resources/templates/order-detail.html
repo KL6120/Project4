@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout::view(~{::title},~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Cart detail</title>
+</head>
+<body>
+	<main>
+		<!-- breadcrumb -->
+		<div class="container">
+			<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+				<a th:href="@{/orders}" class="stext-109 cl8 hov-cl1 trans-04">Cart<i
+					class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+				</a> <span class="stext-109 cl4">Cart detail</span>
+			</div>
+		</div>
+
+
+		<!-- Shoping Cart -->
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-xl-12 m-lr-auto m-b-50">
+					<h4 class="mtext-109 cl2 p-b-30 text-center">Cart detail</h4>
+					<div class="flex-w flex-t bor12 p-b-13">
+						<div class="size-209">
+							<span class="stext-110 cl2" th:text="${'Order id: #'+ order.id}">
+							</span>
+						</div>
+						<div class="size-209">
+							<span class="stext-110 cl2"
+								th:text="${'Order date: '+ #dates.format(order.createdAt, 'dd-MM-yyyy')}">
+							</span>
+						</div>
+						<div class="size-209">
+							<span class="stext-110 cl2"
+								th:text="${'Total: '+ #numbers.formatDecimal(order.total, 1, 'COMMA', 0, 'POINT') + 'đ'}">
+							</span>
+						</div>
+						<div class="size-209">
+							<span class="stext-110 cl2"
+								th:text="${'Shipping fee: '+ #numbers.formatDecimal(order.feeShip, 1, 'COMMA', 0, 'POINT') + 'đ'}">
+							</span>
+						</div>
+						<div class="size-209">
+							<span class="stext-110 cl2"
+								th:text="${'Discount: '+ #numbers.formatDecimal(order.discount, 1, 'COMMA', 0, 'POINT') + 'đ'}">
+							</span>
+						</div>
+						<div class="size-209">
+							<span class="stext-110 cl2" th:if="${order.status == 1}">
+								Order status: <span class="text-danger">To Pay</span>
+							</span> <span class="stext-110 cl2" th:if="${order.status == 2}">
+								Order status: <span class="text-danger">To Ship</span>
+							</span> <span class="stext-110 cl2" th:if="${order.status == 3}">
+								Order status: <span class="text-danger">To Receive</span>
+							</span> <span class="stext-110 cl2" th:if="${order.status == 4}">
+								Order status: <span class="text-danger">Completed</span>
+							</span> <span class="stext-110 cl2" th:if="${order.status == 5}">
+								Order status: <span class="text-danger">Cancelled</span>
+							</span>
+						</div>
+						<div class="size-209">
+							<a class="btn btn-danger"
+								th:href="@{|/orders/cancel/${order.id}|}">Cancel
+								Order</a>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-lg-12 col-xl-12 m-lr-auto m-b-50">
+					<h4 class="mtext-109 cl2 p-b-30 text-center">Detail</h4>
+					<div class="m-l-25 m-r--38 m-lr-0-xl">
+						<div class="wrap-table-shopping-cart">
+							<table class="table-shopping-cart">
+								<tr class="table_head">
+									<th class="text-center" width="5%">#</th>
+									<th class="column-1">Product</th>
+									<th class="column-2"></th>
+									<th class="column-3">Price</th>
+									<th class="column-4">Quantity</th>
+									<th class="column-5">Total</th>
+								</tr>
+
+								<th:block th:each="orderDetail, st : ${order.orderDetails}">
+									<tr class="table_row cart-item">
+										<td class="text-center" th:text="${st.count}"></td>
+										<td class="column-1">
+											<div class="how-itemcart1">
+												<img th:src="@{|/images/${orderDetail.product.image}|}"
+													alt="IMG">
+											</div>
+										</td>
+										<td class="column-2" th:text="${orderDetail.product.name}"></td>
+										<td class="column-3 product-price"
+											th:data-price="${orderDetail.price}"
+											th:text="${#numbers.formatDecimal(orderDetail.price, 1, 'POINT', 0, 'COMMA') + 'đ'}"></td>
+										<td class="column-4" th:text="${orderDetail.quantity}"></td>
+										<td class="
+											column-5
+											line-total"
+											th:text="${#numbers.formatDecimal(orderDetail.price *orderDetail.quantity, 1, 'POINT', 0, 'COMMA') + 'đ'}">0đ</td>
+
+									</tr>
+								</th:block>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

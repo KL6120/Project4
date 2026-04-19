@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/admin/layout::view(~{::title}, ~{::article})}"
+	th:with="active=${active}">
+<head>
+<meta charset="UTF-8">
+<title>Manage user (Edit)</title>
+</head>
+<body>
+	<article>
+		<div
+			class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+			<div>
+				<h3 class="fw-bold mb-3">Manage user</h3>
+				<h6 class="op-7 mb-2"></h6>
+			</div>
+			<div class="ms-md-auto py-2 py-md-0">
+				<a th:href="@{/admin/manageUser}" class="btn btn-primary btn-round">Back</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">Update user</h4>
+					</div>
+					<div class="card-body">
+						<label class="text-danger" th:text="${message}"></label>
+						<form th:action="@{/admin/manageUser/update}" method="post"
+							th:object="${users}" enctype="multipart/form-data">
+							<div class="form-group">
+								<label for="name">Name</label> <input type="text"
+									class="form-control" id="name" th:field="*{fullname}" required />
+								<input type="hidden" class="form-control" id="id"
+									th:field="*{id}" /> <i class="text-danger"
+									th:errors="*{fullname}"></i>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				$('#name').on('change', function() {
+					var str = removeUTF8($('#name').val());
+					$('#slug').val(str);
+				})
+			</script>
+	</article>
+</body>
+</html>
